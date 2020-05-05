@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "build": "tsc"
   },
   "dependencies": {
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@types/lru-cache": "^5.1.0",
     "@types/node": "^12.12.37",
-    "@types/ws": "^7.2.4"
+    "@types/ws": "^7.2.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "3.8.3"
   }
 }

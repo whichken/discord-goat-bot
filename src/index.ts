@@ -13,9 +13,33 @@ client.once('ready', () => {
 })
 
 client.on('message', async message => {
-  if (message.content.startsWith("!gif ")) {
+  // Ignore messages not to me, or from bots that can cause an infinite loop
+  if (!message.content.startsWith('!') || message.author.bot) return
+
+  const args = message.content.split(/ +/)
+  const cleanArgs = message.cleanContent.split(/ +/).slice(1)
+  const command = args.shift()?.toLowerCase()
+
+  console.info(`${message.author.username}: ${message.cleanContent}`)
+
+  // Some commands are only supported as DMs
+  if (message.channel.type === "dm") {
+    if (command === '!prefix') {
+      const channelId = args.shift()?.replace(/[^0-9]/gi, '')
+      const prefix = args.join(' ')
+
+      if (channelId && prefix) {
+        gif.setChannelPrefix(channelId, prefix)
+      } else {
+        console.error('Missing channelId or prefix')
+      }
+    }
+  }
+
+  if (command === "!gif") {
     message.channel.startTyping()
-    const url = await gif.search(message.content.replace("!gif ", ""))
+    const query = cleanArgs.join(' ')
+    const url = await gif.search(query, message.channel.id)
     if (url) {
       const attachment = new MessageAttachment(url)
       attachment.name = "attachment.gif"
