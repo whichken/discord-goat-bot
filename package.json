@@ -6,5 +6,16 @@
   "repository": "https://github.com/whichken/discord-goat-bot",
   "author": "whichken",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.37",
+    "@types/ws": "^7.2.4"
+  }
 }
