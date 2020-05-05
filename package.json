@@ -1,0 +1,10 @@
+{
+  "name": "discord-goat-bot",
+  "version": "0.0.0",
+  "description": "Find better gifs",
+  "main": "index.js",
+  "repository": "https://github.com/whichken/discord-goat-bot",
+  "author": "whichken",
+  "license": "MIT",
+  "private": true
+}
