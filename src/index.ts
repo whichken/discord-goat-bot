@@ -6,6 +6,7 @@ import { Client, MessageAttachment } from "discord.js"
 import { Gif } from "./gif"
 
 const client = new Client()
+const gif = new Gif()
 
 client.once('ready', () => {
   console.log('Ready')
@@ -13,13 +14,14 @@ client.once('ready', () => {
 
 client.on('message', async message => {
   if (message.content.startsWith("!gif ")) {
-    message.channel.send('Searching.')
-    const url = await new Gif().search(message.content.replace("!gif ", ""))
+    message.channel.startTyping()
+    const url = await gif.search(message.content.replace("!gif ", ""))
     if (url) {
       const attachment = new MessageAttachment(url)
       attachment.name = "attachment.gif"
       message.channel.send(attachment)
     }
+    message.channel.stopTyping(true)
   }
 })
 
