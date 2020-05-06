@@ -7,7 +7,7 @@ export class Gif {
   private cache: LRU<string, string[]>
   private prefixes: { [key: string]: string } = {}
 
-  constructor() {
+  constructor(private nsfw: boolean = false) {
     // Set up the API
     const credentials = new CognitiveServicesCredentials(process.env.AZURE_COGNITIVE_KEY!)
     this.api = new ImageSearchClient(credentials, { endpoint: process.env.AZURE_COGNITIVE_ENDPOINT! })
@@ -19,7 +19,7 @@ export class Gif {
   private async searchApi(query: string): Promise<string[]> {
     try {
       console.debug(`Bing image search for ${query}`)
-      const results = await this.api.images.search(query, { imageType: "AnimatedGif", count: 150 })
+      const results = await this.api.images.search(query, { imageType: "AnimatedGif", count: 150, safeSearch: this.nsfw ? "Off" : "Moderate" })
       return (results.value.map(result => result.contentUrl).filter(r => r) as string[])
     } catch (error) {
       throw error

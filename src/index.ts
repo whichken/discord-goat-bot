@@ -7,6 +7,7 @@ import { Gif } from "./gif"
 
 const client = new Client()
 const gif = new Gif()
+const nsfw = new Gif(true)
 
 client.once('ready', () => {
   console.log('Ready')
@@ -40,6 +41,18 @@ client.on('message', async message => {
     message.channel.startTyping()
     const query = cleanArgs.join(' ')
     const url = await gif.search(query, message.channel.id)
+    if (url) {
+      const attachment = new MessageAttachment(url)
+      attachment.name = "attachment.gif"
+      message.channel.send(attachment)
+    }
+    message.channel.stopTyping(true)
+  }
+
+  if (command === "!nsfw") {
+    message.channel.startTyping()
+    const query = cleanArgs.join(' ')
+    const url = await nsfw.search(query, message.channel.id)
     if (url) {
       const attachment = new MessageAttachment(url)
       attachment.name = "attachment.gif"

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-12
+FROM node:12.14.0-alpine
 
 WORKDIR /usr/src/app
 
