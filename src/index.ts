@@ -4,6 +4,7 @@ dotenv.config()
 
 import { Client, MessageAttachment } from "discord.js"
 import { Gif } from "./gif"
+import { registerCollector } from "./collector"
 
 const client = new Client()
 const gif = new Gif()
@@ -11,6 +12,9 @@ const nsfw = new Gif(true)
 
 client.once('ready', () => {
   console.log('Ready')
+
+  // Start collecting all messages to feed thru the (future) neural net
+  client.channels.cache.filter(channel => channel.type === "text").forEach(channel => registerCollector(channel))
 })
 
 client.on('message', async message => {
